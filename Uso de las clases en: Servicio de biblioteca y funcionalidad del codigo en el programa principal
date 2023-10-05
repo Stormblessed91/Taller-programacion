@@ -1,0 +1,21 @@
+public class Main {
+    public static void main(String[] args) {
+        Biblioteca biblioteca = new Biblioteca();
+        Bibliotecaria bibliotecaria = new Bibliotecaria();
+        Lector lector = new Lector();
+
+        Libro libro1 = new Libro("Harry Potter", "J.K. Rowling", 5);
+        Libro libro2 = new Libro("Cien años de soledad", "Gabriel García Márquez", 3);
+
+        bibliotecaria.ingresarLibro(biblioteca, libro1);
+        bibliotecaria.ingresarLibro(biblioteca, libro2);
+
+        biblioteca.mostrarLibrosDisponibles();
+
+        Lector.solicitarLibro(biblioteca, libro1);
+        Lector.solicitarLibro(biblioteca, libro1);
+        Lector.devolverLibro(libro1);
+
+        biblioteca.mostrarLibrosDisponibles();
+    }
+}
