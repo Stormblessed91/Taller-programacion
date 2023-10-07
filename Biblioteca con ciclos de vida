@@ -1,0 +1,114 @@
+public class Libro {
+    private String titulo;
+    private String autor;
+    private int stock;
+
+    public Libro(String titulo, String autor, int stock) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.stock = stock;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void prestar() {
+        if (stock > 0) {
+            stock--;
+            System.out.println("Libro prestado: " + titulo);
+        } else {
+            System.out.println("¡Lo siento, el libro no está disponible en este momento!");
+        }
+    }
+
+    public void devolver() {
+        stock++;
+        System.out.println("Libro devuelto: " + titulo);
+    }
+
+    public void eliminar() {
+        System.out.println("Libro eliminado: " + titulo);
+    }
+}
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Biblioteca {
+    private List<Libro> inventario;
+
+    public Biblioteca() {
+        inventario = new ArrayList<>();
+    }
+
+    public void agregarLibro(Libro libro) {
+        inventario.add(libro);
+    }
+
+    public void mostrarLibrosDisponibles() {
+        System.out.println("Lista de libros disponibles:");
+        for (Libro libro : inventario) {
+            System.out.println(libro.getTitulo() + " - " + libro.getAutor() + " - Stock: " + libro.getStock());
+        }
+    }
+
+    public void eliminarLibro(Libro libro) {
+        inventario.remove(libro);
+        libro.eliminar();
+    }
+}
+
+public class Bibliotecaria {
+    public void ingresarLibro(Biblioteca biblioteca, Libro libro) {
+        biblioteca.agregarLibro(libro);
+        System.out.println("Libro ingresado: " + libro.getTitulo());
+    }
+}
+
+public class Lector {
+    public void solicitarLibro(Biblioteca biblioteca, Libro libro) {
+        libro.prestar();
+    }
+
+    public void devolverLibro(Libro libro) {
+        libro.devolver();
+    }
+
+    public void eliminarLibro(Biblioteca biblioteca, Libro libro) {
+        biblioteca.eliminarLibro(libro);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Biblioteca biblioteca = new Biblioteca();
+        Bibliotecaria bibliotecaria = new Bibliotecaria();
+        Lector lector = new Lector();
+
+        Libro libro1 = new Libro("Harry Potter", "J.K. Rowling", 5);
+        Libro libro2 = new Libro("Cien años de soledad", "Gabriel García Márquez", 3);
+
+        bibliotecaria.ingresarLibro(biblioteca, libro1);
+        bibliotecaria.ingresarLibro(biblioteca, libro2);
+
+        biblioteca.mostrarLibrosDisponibles();
+
+        lector.solicitarLibro(biblioteca, libro1);
+        lector.solicitarLibro(biblioteca, libro1);
+        lector.devolverLibro(libro1);
+
+        biblioteca.mostrarLibrosDisponibles();
+
+        lector.eliminarLibro(biblioteca, libro1);
+        biblioteca.mostrarLibrosDisponibles();
+    }
+}
